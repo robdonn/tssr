@@ -10,5 +10,13 @@
     "url": "https://robdonn.github.io"
   },
   "license": "MIT",
-  "private": true
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "devDependencies": {
+    "lerna": "^3.13.1"
+  }
 }
