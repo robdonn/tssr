@@ -5,26 +5,18 @@ jobs:
   build:
     docker:
       - image: circleci/node:10.14.1
-
     working_directory: ~/repo
-
     steps:
       - checkout
-
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies-
-
       - run: yarn install
-
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-
-      # run tests!
       - run: yarn test
-
       - codecov/upload:
           file: coverage/*.json
