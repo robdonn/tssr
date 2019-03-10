@@ -16,9 +16,7 @@ jobs:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies-
 
-      - run:
-        name: Install
-        command: yarn install
+      - run: yarn install
 
       - save_cache:
           paths:
@@ -26,9 +24,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       # run tests!
-      - run:
-          name: Test
-          command: yarn test
+      - run: yarn test
 
       - codecov/upload:
           file: coverage/*.json
