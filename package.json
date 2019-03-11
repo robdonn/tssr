@@ -16,10 +16,15 @@
     ]
   },
   "scripts": {
-    "test": "jest --coverage --passWithNoTests"
+    "test": "jest"
   },
   "devDependencies": {
-    "jest": "^24.3.1",
-    "lerna": "^3.13.1"
+    "globby": "^9.1.0",
+    "jest": "^24.4.0",
+    "jest-express": "^1.10.0",
+    "jest-haste-map": "^24.4.0",
+    "jest-resolve": "^24.4.0",
+    "lerna": "^3.13.1",
+    "webpack": "^4.29.6"
   }
 }
