@@ -19,7 +19,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "lib/index.js",
+  "main": "lib/WebpackSSRDevServer.js",
   "files": [
     "lib"
   ],
@@ -33,5 +33,13 @@
     "server",
     "development"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "fs-extra": "^7.0.1",
+    "nodemon": "^1.18.10"
+  },
+  "peerDependencies": {
+    "webpack": ">= 3"
+  }
 }

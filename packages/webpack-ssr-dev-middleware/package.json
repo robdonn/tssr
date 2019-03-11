@@ -1,7 +1,7 @@
 {
-  "name": "@tssr/webpack-ssr-dev-express-middleware",
+  "name": "@tssr/webpack-ssr-dev-middleware",
   "version": "0.1.0",
-  "description": "Webpack SSR development Express middleware",
+  "description": "Webpack SSR development middleware",
   "author": {
     "name": "Robert Donnelly",
     "email": "dev@robdonn.com",
@@ -10,7 +10,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/robdonn/tssr.git",
-    "directory": "packages/webpack-ssr-dev-express-middleware"
+    "directory": "packages/webpack-ssr-dev-middleware"
   },
   "homepage": "https://github.com/robdonn/tssr",
   "bugs": {
