@@ -3,7 +3,7 @@ const globby = require("globby");
 
 const core = {
   bail: false,
-  coverageReporters: ["text-summary", "html", "json"],
+  coverageReporters: ["text-summary", "html", "lcov"],
   roots: [path.join(__dirname, "__mocks__")],
   rootDir: __dirname,
   testMatch: ["**/__tests__/*.test.js"]
