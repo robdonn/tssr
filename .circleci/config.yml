@@ -30,6 +30,6 @@ jobs:
             ./cc-test-reporter before-build
             yarn test
             # upload test report to Code Climate using `after-build`
-            ./cc-test-reporter after-build --coverage-input-type clover --exit-code $?
+            ./cc-test-reporter after-build --coverage-input-type lcov --exit-code $?
       - codecov/upload:
           file: coverage/*.json
