@@ -1,0 +1,72 @@
+[
+  [
+    "entry is string",
+    {
+      "configFileName": "clientWebpack_withEntryString",
+      "config": {
+        "entry": "app-entry"
+      },
+      "result": [
+        "webpack-hot-middleware/client?path=WEBPACK_DEVSERVER_HOST:WEBPACK_DEVSERVER_PORT/__webpack_hmr",
+        "app-entry"
+      ]
+    }
+  ],
+  [
+    "entry is array",
+    {
+      "configFileName": "clientWebpack_withEntryArray",
+      "config": {
+        "entry": ["app-entry"]
+      },
+      "result": [
+        "webpack-hot-middleware/client?path=WEBPACK_DEVSERVER_HOST:WEBPACK_DEVSERVER_PORT/__webpack_hmr",
+        "app-entry"
+      ]
+    }
+  ],
+  [
+    "entry is object with arrays",
+    {
+      "configFileName": "clientWebpack_withEntryObjectOfArrays",
+      "config": {
+        "entry": {
+          "app": ["app-entry"],
+          "bundle": ["bundle-entry"]
+        }
+      },
+      "result": {
+        "app": [
+          "webpack-hot-middleware/client?path=WEBPACK_DEVSERVER_HOST:WEBPACK_DEVSERVER_PORT/__webpack_hmr",
+          "app-entry"
+        ],
+        "bundle": [
+          "webpack-hot-middleware/client?path=WEBPACK_DEVSERVER_HOST:WEBPACK_DEVSERVER_PORT/__webpack_hmr",
+          "bundle-entry"
+        ]
+      }
+    }
+  ],
+  [
+    "entry is object with strings",
+    {
+      "configFileName": "clientWebpack_withEntryObjectOfStrings",
+      "config": {
+        "entry": {
+          "app": "app-entry",
+          "bundle": "bundle-entry"
+        }
+      },
+      "result": {
+        "app": [
+          "webpack-hot-middleware/client?path=WEBPACK_DEVSERVER_HOST:WEBPACK_DEVSERVER_PORT/__webpack_hmr",
+          "app-entry"
+        ],
+        "bundle": [
+          "webpack-hot-middleware/client?path=WEBPACK_DEVSERVER_HOST:WEBPACK_DEVSERVER_PORT/__webpack_hmr",
+          "bundle-entry"
+        ]
+      }
+    }
+  ]
+]
