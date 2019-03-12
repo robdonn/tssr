@@ -31,12 +31,23 @@ const handleEntry = config => {
   }
 };
 
+const handleOutput = config => {
+  config.webpackConfig.client.output = config.webpackConfig.client.output || {};
+
+  config.webpackConfig.client.output.hotUpdateMainFilename =
+    "updates/[hash].hot-update.json";
+  config.webpackConfig.client.output.hotUpdateChunkFilename =
+    "updates/[id].[hash].hot-update.js";
+};
+
 function enableHotReloading() {
   if (!this.webpackConfig.client.entry) {
     throw new Error("No entry declared in client webpack config");
   }
 
   handleEntry(this);
+
+  handleOutput(this);
 }
 
 module.exports = {
