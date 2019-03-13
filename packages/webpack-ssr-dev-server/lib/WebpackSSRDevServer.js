@@ -6,6 +6,7 @@ const { enableHotReloading } = require("./methods/enableHotReloading");
 const { setPublicPath } = require("./methods/setPublicPath");
 const { manageCompilers } = require("./methods/manageCompilers");
 const { attachToServer } = require("./methods/attachToServer");
+const { watchServerCompiler } = require("./methods/watchServerCompiler");
 
 class WebpackSSRDevServer {
   constructor(config = {}) {
@@ -18,12 +19,16 @@ class WebpackSSRDevServer {
     if (this.config.hot) {
       enableHotReloading.call(this);
     }
+  }
 
+  async init() {
     setPublicPath.call(this);
 
     manageCompilers.call(this);
 
     attachToServer.call(this);
+
+    watchServerCompiler.call(this);
   }
 }
 
