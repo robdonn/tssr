@@ -63,51 +63,30 @@ describe("manageCompilers", () => {
     );
   });
 
-  it("should throw if client compiler has errors", done => {
-    hasErrors.mockReturnValueOnce(true).mockReturnValueOnce(false);
-    const mockConfig = {
-      webpackConfig: {
-        client: {
-          name: "client"
-        },
-        server: {
-          name: "server"
+  it.each([["client", true, false], ["server", false, true]])(
+    "should throw if %s compiler has errors",
+    (name, client, server, done) => {
+      hasErrors.mockReturnValueOnce(client).mockReturnValueOnce(server);
+      const mockConfig = {
+        webpackConfig: {
+          client: {
+            name: "client"
+          },
+          server: {
+            name: "server"
+          }
         }
-      }
-    };
+      };
 
-    manageCompilers.call(mockConfig);
+      manageCompilers.call(mockConfig);
 
-    Promise.all([
-      mockConfig.compilerPromise.client,
-      mockConfig.compilerPromise.server
-    ]).catch(error => {
-      expect(error.message).toEqual("Failed to compile client");
-      done();
-    });
-  });
-
-  it("should throw if server compiler has errors", done => {
-    hasErrors.mockReturnValueOnce(false).mockReturnValueOnce(true);
-    const mockConfig = {
-      webpackConfig: {
-        client: {
-          name: "client"
-        },
-        server: {
-          name: "server"
-        }
-      }
-    };
-
-    manageCompilers.call(mockConfig);
-
-    Promise.all([
-      mockConfig.compilerPromise.client,
-      mockConfig.compilerPromise.server
-    ]).catch(error => {
-      expect(error.message).toEqual("Failed to compile server");
-      done();
-    });
-  });
+      Promise.all([
+        mockConfig.compilerPromise.client,
+        mockConfig.compilerPromise.server
+      ]).catch(error => {
+        expect(error.message).toEqual(`Failed to compile ${name}`);
+        done();
+      });
+    }
+  );
 });
