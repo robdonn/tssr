@@ -34,18 +34,20 @@ describe("manageCompilers", () => {
 
     manageCompilers.call(mockConfig);
 
-    expect(mockConfig.compiler.client).toEqual({
-      name: "client",
-      hooks: {
-        compile: expect.any(TappedPromise),
-        done: expect.any(TappedPromise)
-      }
-    });
-    expect(mockConfig.compiler.server).toEqual({
-      name: "server",
-      hooks: {
-        compile: expect.any(TappedPromise),
-        done: expect.any(TappedPromise)
+    expect(mockConfig.compiler).toEqual({
+      client: {
+        name: "client",
+        hooks: {
+          compile: expect.any(TappedPromise),
+          done: expect.any(TappedPromise)
+        }
+      },
+      server: {
+        name: "server",
+        hooks: {
+          compile: expect.any(TappedPromise),
+          done: expect.any(TappedPromise)
+        }
       }
     });
 
