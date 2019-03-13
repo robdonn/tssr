@@ -37,7 +37,9 @@
   "dependencies": {
     "express": "^4.16.4",
     "fs-extra": "^7.0.1",
-    "nodemon": "^1.18.10"
+    "nodemon": "^1.18.10",
+    "webpack-dev-middleware": "^3.6.1",
+    "webpack-hot-middleware": "^2.24.3"
   },
   "peerDependencies": {
     "webpack": ">= 3"

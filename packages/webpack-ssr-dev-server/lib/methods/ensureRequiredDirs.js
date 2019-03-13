@@ -21,6 +21,11 @@ function ensureRequiredDirs() {
     server: require(this.paths.serverWebpack)
   };
 
+  this.watchOptions = {
+    ignored: /node_modules/,
+    stats: this.webpackConfig.client.stats
+  };
+
   fsX.emptyDirSync(this.paths.clientBuild);
   fsX.emptyDirSync(this.paths.serverBuild);
 }

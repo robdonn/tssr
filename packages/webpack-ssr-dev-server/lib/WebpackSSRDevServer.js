@@ -4,6 +4,8 @@ const paths = require("./paths");
 const { ensureRequiredDirs } = require("./methods/ensureRequiredDirs");
 const { enableHotReloading } = require("./methods/enableHotReloading");
 const { setPublicPath } = require("./methods/setPublicPath");
+const { manageCompilers } = require("./methods/manageCompilers");
+const { attachToServer } = require("./methods/attachToServer");
 
 class WebpackSSRDevServer {
   constructor(config = {}) {
@@ -18,6 +20,10 @@ class WebpackSSRDevServer {
     }
 
     setPublicPath.call(this);
+
+    manageCompilers.call(this);
+
+    attachToServer.call(this);
   }
 }
 
