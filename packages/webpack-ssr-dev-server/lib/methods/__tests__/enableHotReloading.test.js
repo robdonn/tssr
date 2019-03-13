@@ -39,6 +39,35 @@ describe("enableHotReloading", () => {
     }
   );
 
+  it("adds output hotUpdate filename properties to output", () => {
+    jest.doMock(
+      "clientWebpack_withNoOutput",
+      () => ({
+        entry: "app.js"
+      }),
+      { virtual: true }
+    );
+
+    const mockConfig = require("clientWebpack_withNoOutput");
+
+    const internalConfig = {
+      paths: {
+        ...paths.mockPaths,
+        clientWebpack: "clientWebpack_withNoOutput"
+      },
+      webpackConfig: {
+        client: mockConfig
+      }
+    };
+
+    enableHotReloading.call(internalConfig);
+
+    expect(internalConfig.webpackConfig.client.output).toEqual({
+      hotUpdateChunkFilename: "updates/[id].[hash].hot-update.js",
+      hotUpdateMainFilename: "updates/[hash].hot-update.json"
+    });
+  });
+
   it("throws error if entry is not defined", () => {
     jest.doMock("clientWebpack_withNoEntry", () => ({}), { virtual: true });
 

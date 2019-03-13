@@ -1,6 +1,9 @@
 const paths = require("paths");
 const { enableHotReloading } = require("../methods/enableHotReloading");
 const { ensureRequiredDirs } = require("../methods/ensureRequiredDirs");
+const { setPublicPath } = require("../methods/setPublicPath");
+const { manageCompilers } = require("../methods/manageCompilers");
+const { attachToServer } = require("../methods/attachToServer");
 
 const WebpackSSRDevServer = require("../WebpackSSRDevServer");
 
@@ -8,11 +11,17 @@ jest.mock("express");
 jest.mock("../paths");
 jest.mock("../methods/enableHotReloading");
 jest.mock("../methods/ensureRequiredDirs");
+jest.mock("../methods/setPublicPath");
+jest.mock("../methods/manageCompilers");
+jest.mock("../methods/attachToServer");
 
 describe("WebpackSSRDevServer", () => {
   beforeEach(() => {
     enableHotReloading.mockClear();
     ensureRequiredDirs.mockClear();
+    setPublicPath.mockClear();
+    manageCompilers.mockClear();
+    attachToServer.mockClear();
   });
 
   it("should create a devServer object with express server attached", () => {
@@ -26,6 +35,15 @@ describe("WebpackSSRDevServer", () => {
     expect(ensureRequiredDirs).toHaveBeenNthCalledWith(1);
 
     expect(enableHotReloading).toHaveBeenCalledTimes(0);
+
+    expect(setPublicPath).toHaveBeenCalledTimes(1);
+    expect(setPublicPath).toHaveBeenNthCalledWith(1);
+
+    expect(manageCompilers).toHaveBeenCalledTimes(1);
+    expect(manageCompilers).toHaveBeenNthCalledWith(1);
+
+    expect(attachToServer).toHaveBeenCalledTimes(1);
+    expect(attachToServer).toHaveBeenNthCalledWith(1);
   });
 
   it("should call enableHotReloading if config.hot is true", () => {
@@ -38,5 +56,14 @@ describe("WebpackSSRDevServer", () => {
 
     expect(enableHotReloading).toHaveBeenCalledTimes(1);
     expect(enableHotReloading).toHaveBeenNthCalledWith(1);
+
+    expect(setPublicPath).toHaveBeenCalledTimes(1);
+    expect(setPublicPath).toHaveBeenNthCalledWith(1);
+
+    expect(manageCompilers).toHaveBeenCalledTimes(1);
+    expect(manageCompilers).toHaveBeenNthCalledWith(1);
+
+    expect(attachToServer).toHaveBeenCalledTimes(1);
+    expect(attachToServer).toHaveBeenNthCalledWith(1);
   });
 });

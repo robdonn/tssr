@@ -5,7 +5,7 @@ const { ensureRequiredDirs } = require("../ensureRequiredDirs");
 jest.mock("fs-extra");
 jest.mock("../../paths");
 
-jest.mock("clientWebpack", () => ({}), { virtual: true });
+jest.mock("clientWebpack", () => ({ stats: {} }), { virtual: true });
 jest.mock("serverWebpack", () => ({}), { virtual: true });
 
 let mockParent;
@@ -20,9 +20,11 @@ describe("ensureRequiredDirs", () => {
     fsX.existsSync.mockReturnValue(true);
     fsX.emptyDirSync.mockReturnValue(true);
 
-    ensureRequiredDirs.call({
+    const mockConfig = {
       paths: paths.mockPaths
-    });
+    };
+
+    ensureRequiredDirs.call(mockConfig);
 
     expect(fsX.existsSync).toHaveBeenCalledTimes(5);
     expect(fsX.existsSync).toHaveBeenNthCalledWith(
@@ -55,6 +57,20 @@ describe("ensureRequiredDirs", () => {
       2,
       paths.mockPaths.serverBuild
     );
+
+    expect(mockConfig).toEqual({
+      paths: paths.mockPaths,
+      watchOptions: {
+        ignored: /node_modules/,
+        stats: {}
+      },
+      webpackConfig: {
+        client: {
+          stats: {}
+        },
+        server: {}
+      }
+    });
   });
 
   it("throws error if all source directories do not exist", () => {
