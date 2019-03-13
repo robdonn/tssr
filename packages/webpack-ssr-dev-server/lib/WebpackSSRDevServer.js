@@ -7,6 +7,7 @@ const { setPublicPath } = require("./methods/setPublicPath");
 const { manageCompilers } = require("./methods/manageCompilers");
 const { attachToServer } = require("./methods/attachToServer");
 const { watchServerCompiler } = require("./methods/watchServerCompiler");
+const { compilersReady } = require("./methods/compilersReady");
 
 class WebpackSSRDevServer {
   constructor(config = {}) {
@@ -29,6 +30,8 @@ class WebpackSSRDevServer {
     attachToServer.call(this);
 
     watchServerCompiler.call(this);
+
+    await compilersReady.call(this);
   }
 }
 
