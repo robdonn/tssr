@@ -5,6 +5,7 @@ const { setPublicPath } = require("../methods/setPublicPath");
 const { manageCompilers } = require("../methods/manageCompilers");
 const { attachToServer } = require("../methods/attachToServer");
 const { watchServerCompiler } = require("../methods/watchServerCompiler");
+const { compilersReady } = require("../methods/compilersReady");
 
 const WebpackSSRDevServer = require("../WebpackSSRDevServer");
 
@@ -16,6 +17,7 @@ jest.mock("../methods/setPublicPath");
 jest.mock("../methods/manageCompilers");
 jest.mock("../methods/attachToServer");
 jest.mock("../methods/watchServerCompiler");
+jest.mock("../methods/compilersReady");
 
 describe("WebpackSSRDevServer", () => {
   beforeEach(() => {
@@ -25,9 +27,11 @@ describe("WebpackSSRDevServer", () => {
     manageCompilers.mockClear();
     attachToServer.mockClear();
     watchServerCompiler.mockClear();
+    compilersReady.mockClear();
   });
 
   it("should create a devServer object with express server attached", () => {
+    compilersReady.mockReturnValueOnce(Promise.resolve());
     const devServer = new WebpackSSRDevServer();
 
     expect(devServer.config).toEqual({});
@@ -52,9 +56,13 @@ describe("WebpackSSRDevServer", () => {
 
     expect(watchServerCompiler).toHaveBeenCalledTimes(1);
     expect(watchServerCompiler).toHaveBeenNthCalledWith(1);
+
+    expect(compilersReady).toHaveBeenCalledTimes(1);
+    expect(compilersReady).toHaveBeenNthCalledWith(1);
   });
 
   it("should call enableHotReloading if config.hot is true", () => {
+    compilersReady.mockReturnValueOnce(Promise.resolve());
     const devServer = new WebpackSSRDevServer({ hot: true });
 
     expect(devServer.config).toEqual({ hot: true });
@@ -78,5 +86,8 @@ describe("WebpackSSRDevServer", () => {
 
     expect(watchServerCompiler).toHaveBeenCalledTimes(1);
     expect(watchServerCompiler).toHaveBeenNthCalledWith(1);
+
+    expect(compilersReady).toHaveBeenCalledTimes(1);
+    expect(compilersReady).toHaveBeenNthCalledWith(1);
   });
 });
