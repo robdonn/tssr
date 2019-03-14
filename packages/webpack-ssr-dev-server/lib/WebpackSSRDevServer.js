@@ -8,6 +8,7 @@ const { manageCompilers } = require("./methods/manageCompilers");
 const { attachToServer } = require("./methods/attachToServer");
 const { watchServerCompiler } = require("./methods/watchServerCompiler");
 const { compilersReady } = require("./methods/compilersReady");
+const { createWatcher } = require("./methods/createWatcher");
 
 class WebpackSSRDevServer {
   constructor(config = {}) {
@@ -32,6 +33,8 @@ class WebpackSSRDevServer {
     watchServerCompiler.call(this);
 
     await compilersReady.call(this);
+
+    createWatcher.call(this);
   }
 }
 
