@@ -6,6 +6,7 @@ const { manageCompilers } = require("../methods/manageCompilers");
 const { attachToServer } = require("../methods/attachToServer");
 const { watchServerCompiler } = require("../methods/watchServerCompiler");
 const { compilersReady } = require("../methods/compilersReady");
+const { createWatcher } = require("../methods/createWatcher");
 
 const WebpackSSRDevServer = require("../WebpackSSRDevServer");
 
@@ -18,6 +19,7 @@ jest.mock("../methods/manageCompilers");
 jest.mock("../methods/attachToServer");
 jest.mock("../methods/watchServerCompiler");
 jest.mock("../methods/compilersReady");
+jest.mock("../methods/createWatcher");
 
 describe("WebpackSSRDevServer", () => {
   beforeEach(() => {
@@ -28,9 +30,10 @@ describe("WebpackSSRDevServer", () => {
     attachToServer.mockClear();
     watchServerCompiler.mockClear();
     compilersReady.mockClear();
+    createWatcher.mockClear();
   });
 
-  it("should create a devServer object with express server attached", () => {
+  it("should create a devServer object with express server attached", async () => {
     compilersReady.mockReturnValueOnce(Promise.resolve());
     const devServer = new WebpackSSRDevServer();
 
@@ -43,7 +46,7 @@ describe("WebpackSSRDevServer", () => {
 
     expect(enableHotReloading).toHaveBeenCalledTimes(0);
 
-    devServer.init();
+    await devServer.init();
 
     expect(setPublicPath).toHaveBeenCalledTimes(1);
     expect(setPublicPath).toHaveBeenNthCalledWith(1);
@@ -59,9 +62,12 @@ describe("WebpackSSRDevServer", () => {
 
     expect(compilersReady).toHaveBeenCalledTimes(1);
     expect(compilersReady).toHaveBeenNthCalledWith(1);
+
+    expect(createWatcher).toHaveBeenCalledTimes(1);
+    expect(createWatcher).toHaveBeenNthCalledWith(1);
   });
 
-  it("should call enableHotReloading if config.hot is true", () => {
+  it("should call enableHotReloading if config.hot is true", async () => {
     compilersReady.mockReturnValueOnce(Promise.resolve());
     const devServer = new WebpackSSRDevServer({ hot: true });
 
@@ -73,7 +79,7 @@ describe("WebpackSSRDevServer", () => {
     expect(enableHotReloading).toHaveBeenCalledTimes(1);
     expect(enableHotReloading).toHaveBeenNthCalledWith(1);
 
-    devServer.init();
+    await devServer.init();
 
     expect(setPublicPath).toHaveBeenCalledTimes(1);
     expect(setPublicPath).toHaveBeenNthCalledWith(1);
@@ -89,5 +95,8 @@ describe("WebpackSSRDevServer", () => {
 
     expect(compilersReady).toHaveBeenCalledTimes(1);
     expect(compilersReady).toHaveBeenNthCalledWith(1);
+
+    expect(createWatcher).toHaveBeenCalledTimes(1);
+    expect(createWatcher).toHaveBeenNthCalledWith(1);
   });
 });
