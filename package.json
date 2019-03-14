@@ -31,6 +31,7 @@
     "jest-haste-map": "^24.5.0",
     "jest-resolve": "^24.5.0",
     "lerna": "^3.13.1",
+    "lerna-changelog": "^0.8.2",
     "webpack": "^4.29.6"
   },
   "config": {
