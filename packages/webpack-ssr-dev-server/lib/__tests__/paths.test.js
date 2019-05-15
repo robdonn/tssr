@@ -61,4 +61,86 @@ describe("paths", () => {
       publicPath: "/static/"
     });
   });
+
+  it("returns paths from config", () => {
+    process.cwd.mockReturnValueOnce("TEST_DIR");
+    const mockConfig = {
+      paths: {
+        clientBuild: "clientBuildFromConfig",
+        serverBuild: "serverBuildFromConfig",
+        src: "srcFromConfig",
+        clientSrc: "clientSrcFromConfig",
+        serverSrc: "serverSrcFromConfig",
+        commonSrc: "commonSrcFromConfig",
+        clientWebpack: "clientWebpackFromConfig",
+        serverWebpack: "serverWebpackFromConfig",
+        dotenv: "dotenvFromConfig",
+        publicPath: "publicPathFromConfig"
+      }
+    };
+    const actualPaths = paths(mockConfig);
+
+    expect(fs.realpathSync).toHaveBeenCalledTimes(1);
+    expect(fs.realpathSync).toHaveBeenNthCalledWith(1, "TEST_DIR");
+
+    expect(path.resolve).toHaveBeenCalledTimes(9);
+    expect(path.resolve).toHaveBeenNthCalledWith(
+      1,
+      "TEST_DIR",
+      mockConfig.paths.clientBuild
+    );
+    expect(path.resolve).toHaveBeenNthCalledWith(
+      2,
+      "TEST_DIR",
+      mockConfig.paths.serverBuild
+    );
+    expect(path.resolve).toHaveBeenNthCalledWith(
+      3,
+      "TEST_DIR",
+      mockConfig.paths.src
+    );
+    expect(path.resolve).toHaveBeenNthCalledWith(
+      4,
+      "TEST_DIR",
+      mockConfig.paths.clientSrc
+    );
+    expect(path.resolve).toHaveBeenNthCalledWith(
+      5,
+      "TEST_DIR",
+      mockConfig.paths.serverSrc
+    );
+    expect(path.resolve).toHaveBeenNthCalledWith(
+      6,
+      "TEST_DIR",
+      mockConfig.paths.commonSrc
+    );
+    expect(path.resolve).toHaveBeenNthCalledWith(
+      7,
+      "TEST_DIR",
+      mockConfig.paths.clientWebpack
+    );
+    expect(path.resolve).toHaveBeenNthCalledWith(
+      8,
+      "TEST_DIR",
+      mockConfig.paths.serverWebpack
+    );
+    expect(path.resolve).toHaveBeenNthCalledWith(
+      9,
+      "TEST_DIR",
+      mockConfig.paths.dotenv
+    );
+
+    expect(actualPaths).toEqual({
+      clientBuild: "TEST_DIR+clientBuildFromConfig",
+      serverBuild: "TEST_DIR+serverBuildFromConfig",
+      src: "TEST_DIR+srcFromConfig",
+      clientSrc: "TEST_DIR+clientSrcFromConfig",
+      serverSrc: "TEST_DIR+serverSrcFromConfig",
+      commonSrc: "TEST_DIR+commonSrcFromConfig",
+      clientWebpack: "TEST_DIR+clientWebpackFromConfig",
+      serverWebpack: "TEST_DIR+serverWebpackFromConfig",
+      dotenv: "TEST_DIR+dotenvFromConfig",
+      publicPath: "publicPathFromConfig"
+    });
+  });
 });
