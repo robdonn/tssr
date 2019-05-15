@@ -21,7 +21,8 @@
   },
   "main": "lib/WebpackSSRDevServer.js",
   "files": [
-    "lib"
+    "lib",
+    "README.md"
   ],
   "directories": {
     "lib": "./lib"

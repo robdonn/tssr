@@ -4,3 +4,15 @@
 # @tssr/webpack-ssr-dev-server
 
 Webpack SSR development server
+
+## Usage
+
+```js
+const WebpackSSRDevServer = require("@tssr/webpack-ssr-dev-server");
+
+const devServer = new WebpackSSRDevServer();
+
+devServer.init().then(() => {
+  console.log("WebpackSSRDevServer is running")
+})
+```
