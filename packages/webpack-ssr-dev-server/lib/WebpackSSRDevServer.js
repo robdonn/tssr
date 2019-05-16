@@ -1,6 +1,6 @@
 const express = require("express");
 
-const paths = require("./paths");
+const paths = require("./helpers/paths");
 const { ensureRequiredDirs } = require("./methods/ensureRequiredDirs");
 const { enableHotReloading } = require("./methods/enableHotReloading");
 const { setPublicPath } = require("./methods/setPublicPath");

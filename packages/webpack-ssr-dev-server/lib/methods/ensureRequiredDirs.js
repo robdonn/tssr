@@ -9,17 +9,14 @@ function ensureRequiredDirs() {
     throw new Error("Source directories do not exist.");
   }
 
-  if (
-    !fsX.existsSync(this.paths.clientWebpack) ||
-    !fsX.existsSync(this.paths.serverWebpack)
-  ) {
+  try {
+    this.webpackConfig = {
+      client: require(this.paths.clientWebpack),
+      server: require(this.paths.serverWebpack)
+    };
+  } catch (error) {
     throw new Error("Webpack configurations do not exist.");
   }
-
-  this.webpackConfig = {
-    client: require(this.paths.clientWebpack),
-    server: require(this.paths.serverWebpack)
-  };
 
   this.watchOptions = {
     ignored: /node_modules/,
