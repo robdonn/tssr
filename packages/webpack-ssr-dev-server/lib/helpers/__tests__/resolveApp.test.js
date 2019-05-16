@@ -16,6 +16,7 @@ describe("resolveApp", () => {
     process.cwd.mockClear();
     fs.realpathSync.mockClear();
     path.resolve.mockClear();
+    process.cwd.mockReturnValueOnce("TEST_DIR");
   });
 
   afterAll(() => {
@@ -23,7 +24,6 @@ describe("resolveApp", () => {
   });
 
   it("returns resolved path if relative", () => {
-    process.cwd.mockReturnValueOnce("TEST_DIR");
     path.isAbsolute.mockReturnValueOnce(false);
 
     const actual = resolveApp("relativePath");
@@ -32,7 +32,6 @@ describe("resolveApp", () => {
   });
 
   it("returns given path if absolute", () => {
-    process.cwd.mockReturnValueOnce("TEST_DIR");
     path.isAbsolute.mockReturnValueOnce(true);
 
     const actual = resolveApp("absolutePath");
