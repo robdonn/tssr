@@ -1,4 +1,4 @@
-const paths = require("paths");
+const paths = require("../helpers/paths");
 const { enableHotReloading } = require("../methods/enableHotReloading");
 const { ensureRequiredDirs } = require("../methods/ensureRequiredDirs");
 const { setPublicPath } = require("../methods/setPublicPath");
@@ -11,7 +11,7 @@ const { createWatcher } = require("../methods/createWatcher");
 const WebpackSSRDevServer = require("../WebpackSSRDevServer");
 
 jest.mock("express");
-jest.mock("../paths");
+jest.mock("../helpers/paths");
 jest.mock("../methods/enableHotReloading");
 jest.mock("../methods/ensureRequiredDirs");
 jest.mock("../methods/setPublicPath");

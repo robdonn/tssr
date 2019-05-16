@@ -1,9 +1,9 @@
 const fsX = require("fs-extra");
-const paths = require("../../paths");
+const paths = require("../../helpers/paths");
 const { ensureRequiredDirs } = require("../ensureRequiredDirs");
 
 jest.mock("fs-extra");
-jest.mock("../../paths");
+jest.mock("../../helpers/paths");
 
 jest.mock("clientWebpack", () => ({ stats: {} }), { virtual: true });
 jest.mock("serverWebpack", () => ({}), { virtual: true });
@@ -26,7 +26,7 @@ describe("ensureRequiredDirs", () => {
 
     ensureRequiredDirs.call(mockConfig);
 
-    expect(fsX.existsSync).toHaveBeenCalledTimes(5);
+    expect(fsX.existsSync).toHaveBeenCalledTimes(3);
     expect(fsX.existsSync).toHaveBeenNthCalledWith(
       1,
       paths.mockPaths.clientSrc
@@ -38,14 +38,6 @@ describe("ensureRequiredDirs", () => {
     expect(fsX.existsSync).toHaveBeenNthCalledWith(
       3,
       paths.mockPaths.commonSrc
-    );
-    expect(fsX.existsSync).toHaveBeenNthCalledWith(
-      4,
-      paths.mockPaths.clientWebpack
-    );
-    expect(fsX.existsSync).toHaveBeenNthCalledWith(
-      5,
-      paths.mockPaths.serverWebpack
     );
 
     expect(fsX.emptyDirSync).toHaveBeenCalledTimes(2);
@@ -84,11 +76,8 @@ describe("ensureRequiredDirs", () => {
   });
 
   it("throws error if all webpack configs do not exist", () => {
-    fsX.existsSync
-      .mockReturnValueOnce(true)
-      .mockReturnValueOnce(true)
-      .mockReturnValueOnce(true)
-      .mockReturnValueOnce(false);
+    jest.unmock("serverWebpack");
+    fsX.existsSync.mockReturnValueOnce(true).mockReturnValueOnce(true);
 
     const expectedError = new Error("Webpack configurations do not exist.");
 

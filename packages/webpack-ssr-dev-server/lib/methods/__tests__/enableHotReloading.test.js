@@ -1,8 +1,8 @@
-const paths = require("../../paths");
+const paths = require("../../helpers/paths");
 const { enableHotReloading } = require("../enableHotReloading");
 const enableHotReloadingScenarios = require("./enableHotReloading.scenarios.json");
 
-jest.mock("../../paths");
+jest.mock("../../helpers/paths");
 
 const { env } = process;
 
